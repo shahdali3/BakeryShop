@@ -1,0 +1,12 @@
+{
+	"validation_field": "validation_field",
+	"validation_length_password": "validation_length_password",
+	"validation_password_match": "validation_password_match",
+	"validation_email_check": "validation_email_check",
+	"not_found": "not_found",
+	"validation_email_password": "validation_email_password",
+	"validation_time_format": "validation_time_format",
+	"validation_must_be_array": "validation_must_be_array",
+	"validation_shift_day": "validation_shift_day",
+	"validation_length_short": "validation_length_short"
+}

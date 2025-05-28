@@ -1,0 +1,7 @@
+node_modules
+.env
+dist
+*.txt
+test-apis
+*.http
+apis
