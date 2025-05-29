@@ -27,12 +27,10 @@ const  categoryRouter : Router= Router();
 
 
 categoryRouter.get('/',
-    isAuthenticated([UserRoles.MANAGER]),
     categoryService.getAllCategories);
 
 
 categoryRouter.get('/:id',
-    isAuthenticated([UserRoles.MANAGER]),
     categoryService.getCategoryById);
 
 

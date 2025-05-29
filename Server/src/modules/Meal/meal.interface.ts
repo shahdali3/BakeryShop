@@ -3,7 +3,7 @@
 import { Document } from "mongoose";
 
 export interface Meal extends Document {
-     name : string;
+    name : string;
     image : ImageType | string;
     categoryId : string;
     notes : string ;
