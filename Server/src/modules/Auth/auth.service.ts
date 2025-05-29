@@ -17,7 +17,7 @@ class AuthService {
             username: req.body.username,
             name: req.body.name,
             password: req.body.password,
-            email: req.body.email,
+            // email: req.body.email,
             image: req.body.image,
             role: req.body.role
         });
