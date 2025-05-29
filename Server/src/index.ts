@@ -10,6 +10,7 @@ import { paymentRouter } from "./modules/Payment";
 import stockRouter from "./modules/Stock/stock.routes";
 import StockOutFlowRouter from "./modules/StockOutflow/stockOutFlow.routes";
 import { shiftRouter } from "./modules/Shift/shift.routes";
+import categoryRouter from "./modules/Category/category.routes";
 
 declare module "express" {
   interface Request {
@@ -40,6 +41,7 @@ const Routes : (app : Application) => void = (app: express.Application) : void =
   app.use('/api/v1/stock', stockRouter)
   app.use('/api/v1/stockOutFlow', StockOutFlowRouter)
   app.use('/api/v1/shift', shiftRouter)
+  app.use('/api/v1/category', categoryRouter)
     
   app.all('*', (req:express.Request, res:express.Response, next:express.NextFunction) => {  
     next(new ApiError(`Route ${req.originalUrl} not found`, 404));

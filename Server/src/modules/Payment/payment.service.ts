@@ -61,6 +61,8 @@ class PaymentService {
                 { _id: shiftId },
                 { $inc: { notPaidOrdersCount: -1, paymentWithCashBalance: paymentWithCash, paymentWithVisaBalance: paymentWithVisa } }
             );
+
+            await orderService.markOrderAsPaid(orderId);
             
             // Print reset for payment
             

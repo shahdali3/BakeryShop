@@ -1,9 +1,9 @@
 
 import { Router } from "express";
-import mealsValidation from "./meal.validation";
 import mealsService from "./meal.service";
 import { UserRoles } from "../User/users.interface";
 import { isAuthenticated} from "../../middleware/auth.middleware";
+import mealsValidation from "./meal.validation";
 
 
 

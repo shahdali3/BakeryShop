@@ -18,41 +18,15 @@ class UsersService {
 
   updateUser = expressAsyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const updateData: any = {};
-      const { name } = req.body;
-      
-      if(name) {
-        updateData.name = name;
-      }
-      
-      // Add shift-related fields if they exist in the request
-      // if (shiftDays) {
-      //   // Explicitly set the array
-      //   updateData.$set = {
-      //     ...updateData.$set,
-      //     shiftDays: shiftDays
-      //   }
-      // }
-      
-      // if (shiftStartTime) {
-      //   updateData.shiftStartTime = shiftStartTime;
-      // }
-      
-      // if (shiftEndTime) {
-      //   updateData.shiftEndTime = shiftEndTime;
-      // }
-
       const user: Users | null = await usersSchema.findByIdAndUpdate(
         req.params.id,
-        updateData,
-        { 
-          new: true,
-          runValidators: true
-        }
+        {
+          $set: req.body,
+        },
+        { new: true }
       );
 
       if (!user) return next(new ApiError(`${req.__("not_found")}`, 404));
-      
       res
         .status(200)
         .json({ message: "User updated successfully", data: sanitization.User(user) });

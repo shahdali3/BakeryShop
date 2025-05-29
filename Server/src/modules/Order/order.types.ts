@@ -42,6 +42,7 @@ export interface ICreateOrderData extends ICreateOrderQuery {
     totalPrice: number; 
     orderItems: IOrderMealItem[];
     stockOutflows?: (string | Types.ObjectId)[] | undefined ; 
+    
 }
 
 export interface IOrderMealItem {

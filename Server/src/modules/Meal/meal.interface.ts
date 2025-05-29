@@ -3,13 +3,12 @@
 import { Document } from "mongoose";
 
 export interface Meal extends Document {
-    readonly name : string;
+     name : string;
     image : ImageType | string;
-    managerId :string ;
+    categoryId : string;
     notes : string ;
     ingredients : Ingredient[]; 
     price : number;
-    category : string;
     isAvailable : boolean;
 }
 
