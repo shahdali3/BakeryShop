@@ -11,7 +11,7 @@ class UsersValidation {
         .isLength({min : 2, max : 50}).withMessage((val,{req}) => req.__('validation_length_short'))
         .custom(async( val: string, {req}) => {
             const user = await usersSchema.findOne({username : val});
-            if(user) throw new Error(`${req.__('validation_email_check')}`);
+            if(user) throw new Error(`${req.__('validation_username_check')}`);
             return true;
         }),
 
@@ -24,34 +24,34 @@ class UsersValidation {
         body('role').default(UserRoles.CASHIER),
 
         // Cashier shift validations
-        body('shiftStartTime')
-        // .if(body('role').equals(UserRoles.CASHIER))
-        .notEmpty().withMessage((val, {req}) => req.__('validation_field'))
-        .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/)
-        .withMessage((val, {req}) => req.__('validation_time_format')),
+        // body('shiftStartTime')
+        // // .if(body('role').equals(UserRoles.CASHIER))
+        // .notEmpty().withMessage((val, {req}) => req.__('validation_field'))
+        // .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/)
+        // .withMessage((val, {req}) => req.__('validation_time_format')),
 
-        body('shiftEndTime')
-        // .if(body('role').equals(UserRoles.CASHIER))
-        .notEmpty().withMessage((val, {req}) => req.__('validation_field'))
-        .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/)
-        .withMessage((val, {req}) => req.__('validation_time_format'))
-        .custom((val, { req }) => {
-            if (req.body.shiftStartTime && val <= req.body.shiftStartTime) {
-                throw new Error(req.__('validation_shift_end_after_start'));
-            }
-            return true;
-        }),
+        // body('shiftEndTime')
+        // // .if(body('role').equals(UserRoles.CASHIER))
+        // .notEmpty().withMessage((val, {req}) => req.__('validation_field'))
+        // .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/)
+        // .withMessage((val, {req}) => req.__('validation_time_format'))
+        // .custom((val, { req }) => {
+        //     if (req.body.shiftStartTime && val <= req.body.shiftStartTime) {
+        //         throw new Error(req.__('validation_shift_end_after_start'));
+        //     }
+        //     return true;
+        // }),
 
-        body('shiftDays')
-        // .if(body('role').equals(UserRoles.CASHIER))
-        .notEmpty().withMessage((val, {req}) => req.__('validation_field'))
-        .isArray().withMessage((val, {req}) => req.__('validation_must_be_array'))
-        .custom((val: any[]) => {
-            if (!Array.isArray(val)) return false;
-            const validDays = Object.values(ShiftsDaysEnum);
-            return val.every(day => validDays.includes(day));
-        })
-        .withMessage((val, {req}) => req.__('validation_shift_day')),
+        // body('shiftDays')
+        // // .if(body('role').equals(UserRoles.CASHIER))
+        // .notEmpty().withMessage((val, {req}) => req.__('validation_field'))
+        // .isArray().withMessage((val, {req}) => req.__('validation_must_be_array'))
+        // .custom((val: any[]) => {
+        //     if (!Array.isArray(val)) return false;
+        //     const validDays = Object.values(ShiftsDaysEnum);
+        //     return val.every(day => validDays.includes(day));
+        // })
+        // .withMessage((val, {req}) => req.__('validation_shift_day')),
 
         validatorMiddleware
     ]

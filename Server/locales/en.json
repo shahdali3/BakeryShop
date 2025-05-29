@@ -8,5 +8,6 @@
 	"validation_time_format": "validation_time_format",
 	"validation_must_be_array": "validation_must_be_array",
 	"validation_shift_day": "validation_shift_day",
-	"validation_length_short": "validation_length_short"
+	"validation_length_short": "validation_length_short",
+	"validation_username_check": "validation_username_check"
 }
