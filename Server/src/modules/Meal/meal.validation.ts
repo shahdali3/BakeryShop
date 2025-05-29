@@ -20,9 +20,8 @@ class MealsValidation {
 
         body('ingredients.*.stockItemId').isMongoId().withMessage((val, {req}) => req.__('invalid_id')),
         body('ingredients.*.quantityUsed').isNumeric().withMessage('quantityUsed must be a number'),
-        body('ingredients.*.unit').isString().withMessage('unit must be a string'),
+        body('ingredients.*.unit').isString().withMessage('unit must be a string')
 
-        body('image').isString().withMessage('image must be a string').optional()
 
     , validatorMiddleware ]
 

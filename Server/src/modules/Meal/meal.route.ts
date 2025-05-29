@@ -17,7 +17,7 @@ mealRouter.get('/:id',mealsValidation.getOne,mealsService.getMealById);
 
 mealRouter.post('/', isAuthenticated([UserRoles.MANAGER])
     ,mealsService.uploadImage,mealsService.saveImage
-    ,mealsValidation.createOne,mealsService.createMeals);
+    , mealsValidation.createOne,mealsService.createMeals);
 
 mealRouter.put('/:id', isAuthenticated([UserRoles.MANAGER]),
     mealsService.uploadImage,mealsService.updateImage
