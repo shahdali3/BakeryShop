@@ -18,7 +18,7 @@ const createOrder = async (req: AuthRequest, res: Response) => {
 
   const data = createOrderSchema.parse(req.body);
 
-  const order = await orderService.createOrder({ ...data, shiftId, cashierId, isPaid: false });
+  const order = await orderService.createOrder({ ...data, shiftId, cashierId });
 
   res.status(201).json({
     success: true,

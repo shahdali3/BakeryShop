@@ -12,7 +12,12 @@ import cloudinary from "../../utils/cloudinary";
 class UsersService {
   getAllUsers = refactorService.getAll<Users>(usersSchema, "Users");
 
-  createUser = refactorService.createOne<Users>(usersSchema);
+  createUser = expressAsyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const user = await usersSchema.create(req.body);
+      res.status(201).json({ message: "User created successfully", data: sanitization.User(user) });
+    }
+  );
 
   getUserById = refactorService.getOneById<Users>(usersSchema);
 
