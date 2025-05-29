@@ -7,8 +7,31 @@ const stockSchema = new mongoose.Schema({
     name: {
         type : String,
         required : true,
-        unique : true
     },
+    supplierName :{
+        type : String,
+        required : true
+
+    },
+    invoice : [
+
+        {
+        type : {
+            type : String,
+            required : true,
+            enum : ["Cash","Postponed"]
+        },
+        value : {
+            type : Number,
+            required : true
+        },
+        residualValue :{
+            type : Number,
+            required : true,
+            default : 0
+        },
+    },
+    ],
     quantity : {
         type: Number,
         required : true,
@@ -18,14 +41,11 @@ const stockSchema = new mongoose.Schema({
         type : Number,
         required : true
     },
-    category: {
-        type : String,
-        enum : ['breakfast', 'lunch', 'dinner', 'drinks','snacks','others'] ,
-        required : true
-    },
+    
     unit : {
         type : String,
         required : true,
+        enum : ['pcs','ml','grams','kg','liters','cans','cups','tsp','tbsp','packets','boxes'], // tsp = teaspoon للتوابل 
         default : 'pcs'
     },
     managerId : {

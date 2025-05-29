@@ -1,6 +1,4 @@
 
-
-
 import mongoose from "mongoose"
 import { Meal } from "./meal.interface"
 
@@ -10,8 +8,8 @@ const mealSchema = new mongoose.Schema({
         url: {type : String, default : 'meal-default.png'},
         publicId : {type : String, default : ''}
     }, 
+    categoryId : {type : mongoose.Schema.Types.ObjectId, ref : 'Category' },
 
-    managerId : {type : mongoose.Schema.Types.ObjectId, ref : 'User' , required : true},
     notes : {type : String },
     ingredients : [
         {
@@ -36,7 +34,6 @@ const mealSchema = new mongoose.Schema({
         },
     ],
     price : {type : Number , required : true},
-    category : {type : String, required : true},
     isAvailable : {type: Boolean, default: "true"}
 
     // category : {type : String, enum : ['breakfast', 'lunch', 'dinner', 'drinks','snacks'] , required : true},

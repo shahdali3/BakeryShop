@@ -13,7 +13,6 @@ userRouter.get(
     usersService.getAllUsers
 )
 userRouter.post('/',
-    isAuthenticated([UserRoles.MANAGER]),
     usersService.uploadImage,
     usersService.saveImage,
     usersValidation.createOne,

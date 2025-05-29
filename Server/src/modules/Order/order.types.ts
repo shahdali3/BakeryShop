@@ -22,6 +22,7 @@ export interface IOrder extends IDBModel {
 export interface ICreateOrderQuery {
     cashierId: string;
     shiftId: string;
+    isPaid : boolean;
     type: OrderTypesEnum;
     custName?: string;
     custPhone?: string;
@@ -42,6 +43,7 @@ export interface ICreateOrderData extends ICreateOrderQuery {
     totalPrice: number; 
     orderItems: IOrderMealItem[];
     stockOutflows?: (string | Types.ObjectId)[] | undefined ; 
+    
 }
 
 export interface IOrderMealItem {

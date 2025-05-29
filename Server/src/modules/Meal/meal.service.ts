@@ -20,10 +20,12 @@ class MealsService {
         unit?: string;
     };
 
-    const ingredients: IngredientInput[] = [];
+    const ingredients: IngredientInput[] = req.body.ingredients || [];
 
     Object.keys(req.body).forEach((key) => {
-        const match = key.match(/^\[ingredients]\[(\d+)]\[(\w+)]$/);
+        // const match = key.match(/^\[ingredients]\[(\d+)]\[(\w+)]$/);
+        const match = key.match(/^ingredients\[(\d+)]\[(\w+)]$/);
+
         if (match) {
             const index = parseInt(match[1]);
             const field = match[2];
@@ -49,6 +51,8 @@ class MealsService {
     req.body.ingredients = ingredients;
 
     const meal: Meal | null = await mealSchema.create(req.body);
+    console.log("BODY KEYS:", Object.keys(req.body));
+
 
     console.log('Formatted Ingredients:', req.body.ingredients);
 
@@ -57,7 +61,7 @@ class MealsService {
     }
 
     await meal.populate([
-        { path: 'managerId', select: 'name' }
+        { path: 'categoryId', select: 'name' }
     ]);
 
     res.status(201).json({ message: "Meal created successfully", data: meal });

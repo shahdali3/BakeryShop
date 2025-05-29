@@ -6,13 +6,24 @@ class MealsValidation {
 
     createOne = [
         body('name').notEmpty().withMessage('name is required')
-        .isLength({min : 3, max : 50}).withMessage('name must be at least 3 characters long')
-        .custom(async( val: string, {req}) => {
+        .isLength({min : 3, max : 50}).withMessage('name must be at least 3 characters long'),
 
-        const meal = await  mealSchema.findOne({name : val});
-        if(meal) throw new Error(`${req.__('not_found')}`);
-        return true;
-    })
+        body('price').notEmpty().withMessage('price is required'),
+
+        body('categoryId').isMongoId().withMessage((val, {req}) => req.__('invalid_id')).optional(),
+
+        body('isAvailable').isBoolean().withMessage('isAvailable must be a boolean').optional(),
+
+        body('notes').isString().withMessage('notes must be a string').optional(),
+
+        body('ingredients').isArray().withMessage('ingredients must be an array'),
+
+        body('ingredients.*.stockItemId').isMongoId().withMessage((val, {req}) => req.__('invalid_id')),
+        body('ingredients.*.quantityUsed').isNumeric().withMessage('quantityUsed must be a number'),
+        body('ingredients.*.unit').isString().withMessage('unit must be a string'),
+
+        body('image').isString().withMessage('image must be a string').optional()
+
     , validatorMiddleware ]
 
     updateOne =  [
