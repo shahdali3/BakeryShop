@@ -8,7 +8,7 @@ const router = Router();
 
 router.route('/')
     .post(
-        isAuthenticated([UserRoles.CASHIER]),
+        isAuthenticated([UserRoles.CASHIER,UserRoles.MANAGER]),
         asyncHandler(orderCtrl.createOrder)
     )
     .get(
