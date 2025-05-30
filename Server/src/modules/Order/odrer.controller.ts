@@ -31,7 +31,9 @@ const addMealToOrder = async (req: AuthRequest, res: Response) => {
   const { id: orderId } = params.parse(req.params);
   const { mealId, quantity } = addMealToOrderSchema.parse(req.body);
 
-  const order = await orderService.addMealToOrder({ orderId, orderItem: { mealId, quantity } });
+  const validatedQuantity = Number(quantity);
+
+  const order = await orderService.addMealToOrder({ orderId, orderItem: { mealId, quantity: validatedQuantity } });
 
   res.status(200).json({
     success: true,

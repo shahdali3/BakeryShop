@@ -4,7 +4,7 @@ import { OrderTypesEnum } from "./order.types";
 
 export const orderItemSchema = z.object({
     mealId: z.string().regex(MONGODBObjectId, 'invalid meal id'),
-    quantity: z.number().min(1),
+    quantity: z.number().min(0.01).default(1).optional(),
     note: z.string().optional()
 })
 
@@ -13,7 +13,13 @@ export const createOrderSchema = z.object({
     custPhone: z.string().optional(),
     custAddress: z.string().optional(),
     type: z.nativeEnum(OrderTypesEnum),
-    orderItems: z.array(orderItemSchema),
+    orderItems: z.array(
+        z.object({
+            mealId : z.string().regex(MONGODBObjectId, 'invalid meal id'),
+            quantity: z.number().positive().min(0.01),
+            note: z.string().optional()
+        })
+    ),
 }).refine((data) => {
     if(data.type === OrderTypesEnum.DELIVERY) {
         return !!data.custName && !!data.custAddress && !!data.custPhone;  

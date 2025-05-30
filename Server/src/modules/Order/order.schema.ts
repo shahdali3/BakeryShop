@@ -23,7 +23,8 @@ const orderSchema = new Schema({
         },
         quantity: {
             type: Number,
-            required: true
+            required: true,
+            min : 0.01
         },
         price: {
             type: Number,
@@ -34,8 +35,7 @@ const orderSchema = new Schema({
             default: false
         },
         note: {
-            type: String,
-            reqyured: false
+            type: String
         }
     }],
     totalPrice: {
@@ -60,11 +60,9 @@ const orderSchema = new Schema({
     },
     custPhone: {
         type: String,
-        required: false
     },
     custAddress: {
         type: String,
-        required: false
     }     
 }, {
     timestamps : true,
