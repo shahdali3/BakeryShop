@@ -6,6 +6,7 @@ export const addCategorySchema = z.object({
     
     name : z.string().min(3).max(100),
     description : z.string().min(3).max(500).optional(),
+    color : z.string().min(3).max(100).optional(),
     date : z.string().datetime().optional()
 })
 
@@ -18,6 +19,7 @@ export const updateCategorySchema = z.object({
 
     name : z.string().min(3).max(100).optional(),
     description : z.string().min(3).max(500).optional(),
+    color : z.string().min(3).max(100).optional(),
     date : z.string().datetime().optional()
 })
 

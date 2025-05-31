@@ -18,6 +18,9 @@ const categorySchema = new mongoose.Schema({
         type : String,
         trim : true
     },
+    color: {
+        type: String
+    },
     date : {
         type : Date,
         default : Date.now
