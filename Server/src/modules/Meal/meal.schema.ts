@@ -19,6 +19,10 @@ const mealSchema = new mongoose.Schema({
                 ref : 'Stock',
                 required : true
             },
+            stockName :{
+                type : String,
+                required : true
+            },
             quantityUsed: 
             {
                 type : Number,

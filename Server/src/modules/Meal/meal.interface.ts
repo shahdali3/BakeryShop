@@ -7,13 +7,14 @@ export interface Meal extends Document {
     image : ImageType | string;
     categoryId : string;
     notes : string ;
-    ingredients : Ingredient[]; 
+    ingredients : MealIngredient[]; 
     price : number;
     isAvailable : boolean;
 }
 
-export interface Ingredient {
+export interface MealIngredient {
     stockItemId : string;
+    stockName : string;
     quantityUsed : number;
     unit : Unit;
 }

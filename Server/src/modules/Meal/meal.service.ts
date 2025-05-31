@@ -6,6 +6,7 @@ import mealSchema from "./meal.schema";
 import { uploadSingleFile } from "../../middleware/uploadFiles.middleware";
 import sharp from "sharp";
 import cloudinary from "../../utils/cloudinary";
+import { resolveStockItems } from "../Stock/stockResolver.service";
 
 
 
@@ -14,58 +15,65 @@ class MealsService {
 
 
   createMeals: any = expressAsyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    type IngredientInput = {
-        stockItemId?: string;
-        quantityUsed?: number;
-        unit?: string;
-    };
-
-    const ingredients: IngredientInput[] = req.body.ingredients || [];
-
-    Object.keys(req.body).forEach((key) => {
-        // const match = key.match(/^\[ingredients]\[(\d+)]\[(\w+)]$/);
-        const match = key.match(/^ingredients\[(\d+)]\[(\w+)]$/);
-
-        if (match) {
-            const index = parseInt(match[1]);
-            const field = match[2];
-
-            if (!ingredients[index]) {
-                ingredients[index] = {};
-            }
-
-            const mappedField = field === 'stockItem' ? 'stockItemId' : field;
-            ingredients[index][mappedField as keyof IngredientInput] = req.body[key];
-        }
-    });
-
-    ingredients.forEach((item) => {
-        if (item.quantityUsed) {
-            item.quantityUsed = parseFloat(item.quantityUsed as unknown as string);
-        }
-        if (!item.unit) {
-            item.unit = 'pcs';
-        }
-    });
-
-    req.body.ingredients = ingredients;
-
-    const meal: Meal | null = await mealSchema.create(req.body);
-    console.log("BODY KEYS:", Object.keys(req.body));
 
 
-    console.log('Formatted Ingredients:', req.body.ingredients);
+    try {   
+              // تحويل البيانات الواردة
 
-    if (!meal) {
-        return next(new ApiError(`${req.__('not_found')}`, 404));
+        const ingredients = this.parseIngredients(req.body);
+
+              // حل المراجع إلى أحدث مخزون
+
+        const resolvedIngredients = await resolveStockItems(ingredients);
+
+        const meal = await mealSchema.create({
+            
+            ...req.body,
+            ingredients: resolvedIngredients,
+        });
+        await meal.populate([
+            
+            {path: 'categoryId', select: 'name'},
+            {path: 'ingredients.stockItemId', select: 'name quantity unit'},
+        ]);
+
+        res.status(201).json({
+            success: true,
+            message: 'Meal created successfully',
+            data: meal})
+        
+    } catch (error) {
+        next(error);
     }
-
-    await meal.populate([
-        { path: 'categoryId', select: 'name' }
-    ]);
-
-    res.status(201).json({ message: "Meal created successfully", data: meal });
 });
+    private parseIngredients(body: any): Array<{
+    stockName: string;
+    quantityUsed: number;
+    unit : string;
+  }> {
+    const ingredients: any[] = body.ingredients || [];
+    
+    Object.keys(body).forEach((key) => {
+      const match = key.match(/^ingredients\[(\d+)]\[(\w+)]$/);
+      if (match) {
+        const index = parseInt(match[1]);
+        const field = match[2];
+
+        if (!ingredients[index]) {
+          ingredients[index] = {};
+        }
+
+        const mappedField = field === 'stockItem' ? 'stockName' : field;
+        ingredients[index][mappedField] = body[key];
+      }
+    });
+
+    return ingredients.map(item => ({
+      stockName: item.stockName || item.stockItem,
+      quantityUsed: item.quantityUsed ? parseFloat(item.quantityUsed) : 0,
+      unit: item.unit || 'pcs'
+    }));
+  }
 
 
 
