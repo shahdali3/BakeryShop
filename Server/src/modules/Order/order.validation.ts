@@ -24,6 +24,7 @@ export const createOrderSchema = z.object({
     if(data.type === OrderTypesEnum.DELIVERY) {
         return !!data.custName && !!data.custAddress && !!data.custPhone;  
     }
+    return true; // for takeaway orders,customer details are optional
 }, {
     message: 'Customer name/address/phone is required',
 })
