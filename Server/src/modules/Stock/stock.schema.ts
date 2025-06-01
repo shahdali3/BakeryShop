@@ -55,6 +55,11 @@ const stockSchema = new mongoose.Schema({
     date : {
         type : Date,
         default : Date.now
+    },
+    minimumQuantity : {
+        type : Number,
+        required : true,
+        default : 0
     }
 
 },{timestamps : true})

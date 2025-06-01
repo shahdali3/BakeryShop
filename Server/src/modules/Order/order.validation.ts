@@ -36,8 +36,8 @@ export const deleteMealFromOrderSchema = z.object({
 })
 
 export const getAllOrdersSchema = z.object({
-    page: z.number().min(1).default(1),
-    size: z.number().max(100).default(20),
+    page: z.coerce.number().min(1).default(1),
+    size: z.coerce.number().max(100).default(20),
     date: z.coerce.date().optional(),
     cashierId: z.string().regex(MONGODBObjectId, 'invalid cashier id').optional(),
     shiftId: z.string().regex(MONGODBObjectId, 'invalid shift id').optional(),

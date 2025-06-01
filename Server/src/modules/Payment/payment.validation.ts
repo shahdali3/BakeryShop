@@ -14,8 +14,8 @@ export const createPaymentSchema = z.object({
 })
 
 export const getAllPaymentsSchema = z.object({
-    page: z.number().min(1).default(1),
-    size: z.number().min(1).max(100).default(20),
+    page: z.coerce.number().min(1).default(1),
+    size: z.coerce.number().min(1).max(100).default(20),
     paymentMethod: z.nativeEnum(PaymentMethod).optional(),
     date: z.coerce.date().optional(),
     shiftId: z.string().regex(MONGODBObjectId, 'invalid shift id').optional(),
