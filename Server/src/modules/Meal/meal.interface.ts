@@ -17,6 +17,7 @@ export interface MealIngredient {
     stockName : string;
     quantityUsed : number;
     unit : Unit;
+    status : string;
 }
 
 export interface ImageType {

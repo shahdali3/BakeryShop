@@ -35,6 +35,10 @@ const mealSchema = new mongoose.Schema({
                 enum : ['pcs','ml','grams','kg','liters','cans','cups','tsp','tbsp','packets','boxes'], // tsp = teaspoon للتوابل
                 default : 'pcs'
             },
+            status : {
+                type : String,
+                required : true,
+            }
         },
     ],
     price : {type : Number , required : true},

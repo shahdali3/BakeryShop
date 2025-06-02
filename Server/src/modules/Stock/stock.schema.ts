@@ -61,6 +61,12 @@ const stockSchema = new mongoose.Schema({
         type : Number,
         required : true,
         default : 0
+    },
+    status :
+    {
+        type : String,
+        required : true,
+        default : 'active'
     }
 
 },{timestamps : true})

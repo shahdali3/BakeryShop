@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { z } from "zod";
 
 export const addStockSchema = z.object({
@@ -9,6 +10,7 @@ export const addStockSchema = z.object({
     minimumQuantity: z.number().positive(),
     managerId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'invalid manager id'),
     date: z.string().datetime().optional(),
+    status: z.string().min(3).max(100),
     unit: z.enum(['pcs', 'ml', 'grams', 'kg', 'liters', 'cans', 'cups', 'tsp', 'tbsp', 'packets', 'boxes']).default('pcs'),
     invoice: z.array(z.object({
         
@@ -26,6 +28,7 @@ export const updateStockSchema = z.object({
     supplierName: z.string().min(3).max(100).optional(),
     quantity: z.number().positive().optional(),
     pricePerUnit: z.number().positive().optional(),
+    status: z.string().min(3).max(100).optional(),  
     minimumQuantity: z.number().positive().optional(),
     managerId: z.string().regex(/^[0-9a-fA-F]{24}$/, 'invalid manager id').optional(),
     date: z.string().datetime().optional(),

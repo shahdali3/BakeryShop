@@ -34,7 +34,7 @@ class MealsService {
         await meal.populate([
             
             {path: 'categoryId', select: 'name'},
-            {path: 'ingredients.stockItemId', select: 'name quantity unit'},
+            {path: 'ingredients.stockItemId', select: 'name quantity unit '},
         ]);
 
         res.status(201).json({
@@ -50,6 +50,7 @@ class MealsService {
     stockName: string;
     quantityUsed: number;
     unit : string;
+    status : string
   }> {
     const ingredients: any[] = body.ingredients || [];
     
@@ -71,7 +72,8 @@ class MealsService {
     return ingredients.map(item => ({
       stockName: item.stockName || item.stockItem,
       quantityUsed: item.quantityUsed ? parseFloat(item.quantityUsed) : 0,
-      unit: item.unit || 'pcs'
+      unit: item.unit || 'pcs',
+      status : item.status
     }));
   }
 

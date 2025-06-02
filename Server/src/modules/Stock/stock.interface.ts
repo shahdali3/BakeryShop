@@ -12,6 +12,7 @@ export interface  Stock extends Document {
     supplierName : string;
     invoice : Invoice[];
     minimumQuantity : number;
+    status : string;
 }
 
 
