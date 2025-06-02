@@ -9,7 +9,7 @@ export const createPaymentSchema = z.object({
         method: z.nativeEnum(PaymentMethod),
         amount: z.number().min(0),
     })),
-    discount: z.number().min(0).max(20).int().optional(),
+    discount: z.number().min(0).max(50).int().optional(),
     tax: z.number().min(0).int().optional(),
 })
 
